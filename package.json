@@ -2,7 +2,7 @@
   "name": "poke-app-pwa",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mfmaul.github.io/poke-app",
+  "homepage": "https://mfmaul.github.io/poke-app-pwa",
   "dependencies": {
     "@apollo/client": "^3.5.9",
     "@emotion/react": "^11.8.1",

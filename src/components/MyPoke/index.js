@@ -1,47 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import React, { useCallback, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom'
 import gstyle from './styles';
-import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql
-} from "@apollo/client";
-import { writeCookies, readCookies } from '../../utils/common';
+import { writeCookies } from '../../utils/common';
 import { DataContext } from '../App';
-
-const client = new ApolloClient({
-    uri: 'https://beta.pokeapi.co/graphql/v1beta',
-    cache: new InMemoryCache()
-});
-
-const mastersQuery = gql`
-    query samplePokeAPIquery {
-        generations: pokemon_v2_generation {
-            name
-            id
-        }
-        pokemon_v2_pokemoncolor {
-            id
-            name
-        }
-        pokemon_v2_type {
-            id
-            name
-        }
-    }
-`;
-
-const onChangeChk = (e) => {
-    
-}
 
 const MyPoke = () => {
     const navigate = useNavigate();
-    const cardClick = useCallback((id) => navigate('/' + id + '/detail'), [navigate]);
+    const cardClick = useCallback((id) => navigate('/poke-app-pwa/' + id + '/detail'), [navigate]);
     const { mine, updateMine } = useContext(DataContext);
 
     function releasePoke (e, data) {
@@ -60,10 +27,9 @@ const MyPoke = () => {
             
                 <div css={gstyle.listRow}>
                     {mine.mine.owned.map(function (d) {
-                        let link_url = '/' + d.id + '/detail'
                         return (
                             <div css={gstyle.card} key={d.id} onClick={() => cardClick(d.id)}>
-                                <img css={gstyle.cardAvatar} src={'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + d.id.toString().padStart(3, '0') + '.png'} />
+                                <img css={gstyle.cardAvatar} src={'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + d.id.toString().padStart(3, '0') + '.png'} alt={d.nickname} />
                                 <h1 css={gstyle.cardTitle} onClick={(e) => e.stopPropagation()} >{d.nickname}</h1>
                                 <small css={css`text-transform: capitalize;`} onClick={(e) => e.stopPropagation()} >{d.name}</small>
                                 <div css={gstyle.listRow}>

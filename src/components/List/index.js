@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import React, { createContext, useCallback, useContext } from 'react';
+import { createContext, useCallback, useContext } from 'react';
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import gstyle from './styles';
 import {
@@ -11,7 +11,6 @@ import {
     useQuery,
     gql
 } from "@apollo/client";
-import { writeCookies, readCookies } from '../../utils/common';
 import { DataContext } from '../App';
 
 const client = new ApolloClient({
@@ -103,8 +102,8 @@ const FilterContext = createContext(null);
 const List = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
-    const cardClick = useCallback((id) => navigate('/' + id + '/detail'), [navigate]);
-    const { mine, updateMine } = useContext(DataContext);
+    const cardClick = useCallback((id) => navigate('/poke-app-pwa/' + id + '/detail'), [navigate]);
+    const { mine } = useContext(DataContext);
     const [Query, setQuery] = useState(setListQuery());
     const [show, setShow] = useState('none')
 
@@ -116,7 +115,6 @@ const List = () => {
     }
 
     let ref = function () {};
-    let uq = null;
     let qss = {};
 
     const setFilters = (type) => {
@@ -157,6 +155,7 @@ const List = () => {
         console.log(filters_query_specy);
         console.log(filters_query_types);
         console.log(inData);
+        setQuery(Query => setListQuery());
         ref();
         setQueryString();
     }
@@ -234,12 +233,7 @@ const List = () => {
     }
     
     function GetData() {
-        try {
-            setQuery(Query => setListQuery());
-        } catch (e) {
-            
-        }
-        const { loading, error, data, refetch, updateQuery } = useQuery(Query, {
+        const { loading, error, data, refetch } = useQuery(Query, {
             variables: inData
         });
     
@@ -247,17 +241,15 @@ const List = () => {
         if (error) return <p>Error :(</p>;
         
         ref = refetch;
-        uq = updateQuery;
     
         return (
             <div css={gstyle.column}>
                 
                 <div css={gstyle.listRow}>
                     {data.pokemon_v2_pokemon.map(function (d) {
-                        let link_url = '/' + d.id + '/detail'
                         return (
                             <div css={gstyle.card} key={d.id} onClick={() => cardClick(d.id)}>
-                                <img css={gstyle.cardAvatar} src={'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + d.id.toString().padStart(3, '0') + '.png'} />
+                                <img css={gstyle.cardAvatar} src={'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + d.id.toString().padStart(3, '0') + '.png'} alt={d.name} />
                                 <h1 css={gstyle.cardTitle} onClick={(e) => e.stopPropagation()} >{d.name}</h1>
                                 <small onClick={(e) => e.stopPropagation()} >owned: {mine.mine.owned.filter(function (mmo) { return mmo.id == d.id }).length}</small>
                                 <div css={gstyle.listRow}>

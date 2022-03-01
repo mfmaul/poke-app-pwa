@@ -16,7 +16,7 @@ export const writeCookies = (data) => {
         });
     }
 
-    if (data) cookies.set(cook, data, { path: '/' });
+    if (data) cookies.set(cook, data, { path: '/poke-app-pwa' });
 
     // let i = 0;
     // let tmp = Array(10);

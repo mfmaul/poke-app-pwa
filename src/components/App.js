@@ -35,9 +35,9 @@ function App() {
       <SearchBar />
       <div css={container}>
         <Routes>
-          <Route path="/" element={<List />} />
-          <Route path="/:id/detail" element={<Detail />} />
-          <Route path="/my-poke" element={<MyPoke />} />
+          <Route path="/poke-app-pwa" element={<List />} />
+          <Route path="/poke-app-pwa/:id/detail" element={<Detail />} />
+          <Route path="/poke-app-pwa/my-poke" element={<MyPoke />} />
         </Routes>
       </div>
       </DataContext.Provider>

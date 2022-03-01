@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { createContext, useContext, useCallback } from 'react';
+import { useContext, useCallback } from 'react';
 import { css } from '@emotion/react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { resetCookies } from '../../utils/common';
@@ -9,15 +9,16 @@ import { DataContext } from '../App';
 const SearchBar = () => {
 
     const navigate = useNavigate();
-    const myPoke = useCallback(() => navigate('/my-poke'), [navigate]);
-    const home = useCallback(() => navigate('/'), [navigate]);
-    const { mine, updateMine } = useContext(DataContext);
-    const [searchParams, setSearchParams] = useSearchParams();
+    const myPoke = useCallback(() => navigate('/poke-app-pwa/my-poke'), [navigate]);
+    // const home = useCallback(() => navigate('/poke-app-pwa'), [navigate]);
+    const { updateMine } = useContext(DataContext);
+    const [ SearchParams, setSearchParams ] = useSearchParams();
 
     const resetData = () => {
         resetCookies();
         updateMine();
         setSearchParams({});
+        console.log(SearchParams);
     }
 
     return (
@@ -27,7 +28,7 @@ const SearchBar = () => {
                 align-items: center;
                 ${gstyle.listRow}
                 `}>
-                <img css={css`margin: auto 1rem; height: 3rem; width: auto;`} src="https://img.icons8.com/material-outlined/384/000000/home--v2.png" onClick={() => navigate(-1)} />
+                <img css={css`margin: auto 1rem; height: 3rem; width: auto;`} src="https://img.icons8.com/material-outlined/384/000000/home--v2.png" onClick={() => navigate(-1)} alt={'back-home'} />
                 <div css={gstyle.separatorVertical}></div>
                 <h2 css={css`margin: auto 1rem;`}>Pokemons</h2>
                 <div>

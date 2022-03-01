@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { createContext, useContext, useCallback } from 'react';
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import gstyle from './styles';
 import {
@@ -11,7 +11,7 @@ import {
     useQuery,
     gql
 } from "@apollo/client";
-import { writeCookies, readCookies } from '../../utils/common';
+import { writeCookies } from '../../utils/common';
 import { DataContext } from '../App';
 import Modal from '../../utils/modal';
 
@@ -19,8 +19,6 @@ const client = new ApolloClient({
     uri: 'https://beta.pokeapi.co/graphql/v1beta',
     cache: new InMemoryCache()
 });
-
-const mine = readCookies();
 
 const detailQuery = gql`
     query samplePokeAPIquery($id: Int!) {
@@ -76,16 +74,12 @@ const detailQuery = gql`
   }
 `
 
-const modalStyles = css`
-  background-color: white;
-`
-
 export const ModalContext = createContext(null);
 
 const Detail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const myPoke = useCallback(() => navigate('/my-poke'), [navigate]);
+    const myPoke = useCallback(() => navigate('/poke-app-pwa/my-poke'), [navigate]);
     const { mine, updateMine } = useContext(DataContext);
 
     const [ show, setShow ] = useState('none');
@@ -189,7 +183,7 @@ const Detail = () => {
                     <div css={gstyle.row}>
                         <div css={gstyle.column}>
                             <div css={gstyle.card}>
-                                <img css={gstyle.cardAvatar} src={'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + data.pokemon_v2_pokemon_by_pk.id.toString().padStart(3, '0') + '.png'} />
+                                <img css={gstyle.cardAvatar} src={'https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/' + data.pokemon_v2_pokemon_by_pk.id.toString().padStart(3, '0') + '.png'} alt={data.pokemon_v2_pokemon_by_pk.name} />
                                 <div css={css`padding-top: 1rem; ${gstyle.listRow}`}>
                                 {data.pokemon_v2_pokemon_by_pk.pokemon_v2_pokemontypes.map(function (dd) {
                                     return (

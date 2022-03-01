@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { ModalContext } from '../components/Detail/index';
 import gstyle from '../components/Detail/styles';
 
@@ -74,7 +74,7 @@ const modalFooter = css`
 `
 
 const Modal = () => {
-    const { show, mod, windowModal, modalStyles, submitNickname, data } = useContext(ModalContext);
+    const { show, mod,  modalStyles, submitNickname, data } = useContext(ModalContext);
     const [ nickname, setNickname ] = useState(data.pokemon_v2_pokemon_by_pk.name);
 
     return (
